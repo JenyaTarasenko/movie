@@ -1,3 +1,37 @@
 from django.shortcuts import render
+from django.views.generic import View, ListView, DetailView
 
-# Create your views here.
+from .models import *
+
+
+
+# class MovieWievs(View):
+#     """Список фильмов"""
+#     def get(self, request):
+#         movies = Movie.objects.all()
+#         return render(request, 'movie/index.html', {'movie_list': movies})
+
+class MovieWievs(ListView):
+    """Список фильмов"""
+    model = Movie
+    queryset = Movie.objects.filter(draft=False)#фильтрует поле по умолчанию (не черновик)
+    template_name = 'movie/index.html'
+
+
+
+
+
+# class MovieDetail(View):
+#     """Детальная информация фильма"""
+#     def get(self, request, slug):
+#         movies = Movie.objects.get(url=slug)#get метод который получает одну запись pk это id
+#         return render(request, 'movie/movie_detail.html', {'movies_list': movies})
+
+
+class MovieDetail(DetailView):
+    """Детальная информация фильма"""
+    model = Movie
+    slug_field = 'url'#по какому полю нужно искать запесь
+    template_name = 'movie/movie_detail.html'
+
+
