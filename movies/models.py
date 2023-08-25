@@ -4,7 +4,7 @@ from django.db import models
 from django.shortcuts import render
 
 
-class  Category(models.Model):
+class Category(models.Model):
     """Категории"""
     name = models.CharField("Категории", max_length=150)
     description = models.TextField("Описание")
@@ -131,7 +131,7 @@ class Rating(models.Model):
 
 class Reviews(models.Model):
     """отзывы к фильму"""
-    mail = models.EmailField()
+    email = models.EmailField()
     name = models.CharField("Имя", max_length=100)
     text = models.TextField("Сщщбщение", max_length=500)
     parent = models.ForeignKey('self', verbose_name='Родитель', on_delete=models.SET_NULL, blank=True, null=True)#self запись ссылается на запись в этой же таблице
