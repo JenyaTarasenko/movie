@@ -60,7 +60,7 @@ class Movie(models.Model):
     world_premier = models.DateTimeField("Примьера в мире", auto_now_add=True)
     budget = models.PositiveIntegerField("Бюджет", default=0, help_text='указывать сумму в доларах')
     fees_in_usa = models.PositiveIntegerField('Сборы в США', default=0, help_text='Указывать сумму в доларах')
-    fess_in_world  = models.PositiveIntegerField('Сборы в Мире', default=0, help_text='Указывать сумму в доларах')
+    fess_in_world = models.PositiveIntegerField('Сборы в Мире', default=0, help_text='Указывать сумму в доларах')
     category = models.ForeignKey(Category, verbose_name='Категория',on_delete=models.SET_NULL, null=True)
     url = models.SlugField(max_length=160, unique=True)# в url будут прописыватся slug фильма
     draft = models.BooleanField("Черновик", default=False)

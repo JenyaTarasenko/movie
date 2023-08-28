@@ -1,0 +1,1 @@
+default_apps_config = 'movies.apps.MoviesConfig'#чтоб вывестьи имя приложения на рус смотри apps.py

@@ -11,6 +11,16 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display_links = ('name',)#имя поля которое будет ссылкой
 
 
+    # def get_image(self, obj):
+    #     """
+    #     метод выводит изображение в админку
+    #     """
+    #     return mark_safe(f'<img src={obj.image.url} width="50" height="60"')
+    #
+    # get_image.short_description = "Изображение"
+
+
+
 
 class ReviewInline(admin.StackedInline):
     """
@@ -22,6 +32,16 @@ class ReviewInline(admin.StackedInline):
 
 
 
+class MovieShotsInline(admin.StackedInline):
+    """
+    привязать кадры из фильма к фильму в админке
+    """
+    model = MovieShots
+    extra = 1
+
+
+
+
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
     """
@@ -30,7 +50,24 @@ class MovieAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'description', 'url', 'draft')
     list_filter = ('category', 'year', 'actors',)#фильтрация фильмов по категориям
     search_fields = ('title', 'category__name')#фильтрация поля по title,category
-    inlines = [ReviewInline]#класс подвязан к фильму
+    inlines = [ReviewInline, MovieShotsInline]#класс подвязан к фильму
+    save_on_top = True#меню вверху
+    list_editable = ('draft',)#поле для редактирования
+    #fields = (("actors", "directors", 'genres')) #поле где можно выбрать свои поля
+    fieldsets = (
+        (None, {"fields": (("title", "tagline"),)}),
+        (None, {"fields": (("description", "poster"),)}),
+        #(None, {"fields": (("year", "world_premier", "country"),)}),
+        (None, {"fields": (("actors", "directors", "genres", "category"),)}),
+        (None, {"fields": (("budget", "fees_in_usa", "fess_in_world"),)}),
+        (None, {"fields": (("url", "draft"),)}),
+    )#поля модели выстроиные в ряд по горизонтали
+
+
+admin.site.site_title = "Кино"# поменять в админке в верхней части приложение название
+admin.site.site_header = "Кино"# поменять в админке
+
+
 
 
 
