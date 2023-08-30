@@ -1,5 +1,20 @@
 from django.contrib import admin
+from ckeditor.widgets import CKEditorWidget
+from django import forms
+
 from .models import *
+
+
+
+class MovieAdminForm(forms.ModelForm):
+    description = forms.CharField(widget=CKEditorWidget())#азвание модели название поля
+    class Meta:
+        model = Movie
+        fields = '__all__'
+
+
+
+
 
 
 @admin.register(Category)#регистрация через декоратор
@@ -52,6 +67,7 @@ class MovieAdmin(admin.ModelAdmin):
     search_fields = ('title', 'category__name')#фильтрация поля по title,category
     inlines = [ReviewInline, MovieShotsInline]#класс подвязан к фильму
     save_on_top = True#меню вверху
+    form = MovieAdminForm#подключаем форму
     list_editable = ('draft',)#поле для редактирования
     #fields = (("actors", "directors", 'genres')) #поле где можно выбрать свои поля
     fieldsets = (
