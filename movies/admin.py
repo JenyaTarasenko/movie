@@ -7,14 +7,13 @@ from .models import *
 
 
 class MovieAdminForm(forms.ModelForm):
+    """
+    форма расширяющая админку description
+    """
     description = forms.CharField(widget=CKEditorWidget())#азвание модели название поля
     class Meta:
         model = Movie
         fields = '__all__'
-
-
-
-
 
 
 @admin.register(Category)#регистрация через декоратор
@@ -68,6 +67,7 @@ class MovieAdmin(admin.ModelAdmin):
     inlines = [ReviewInline, MovieShotsInline]#класс подвязан к фильму
     save_on_top = True#меню вверху
     form = MovieAdminForm#подключаем форму
+    actions = ['publish', 'unpublish']#подключаем методы для форм
     list_editable = ('draft',)#поле для редактирования
     #fields = (("actors", "directors", 'genres')) #поле где можно выбрать свои поля
     fieldsets = (
@@ -78,6 +78,37 @@ class MovieAdmin(admin.ModelAdmin):
         (None, {"fields": (("budget", "fees_in_usa", "fess_in_world"),)}),
         (None, {"fields": (("url", "draft"),)}),
     )#поля модели выстроиные в ряд по горизонтали
+
+    def publish(self, request, queryset):
+        """
+        Снять с публикации
+        """
+        row_udate = queryset.update(draft=True)
+        if row_update == '1':
+            massege_bit = '1 запись обновлена'
+        else:
+            massage_bit = f"{row_update} запись обновлена"
+        self.massage_user(request, f"{massage_bit}")
+
+
+
+        def unpublish(self, request, queryset):
+            """
+            Публиковать
+            """
+            row_update = queryset.update(draft=False)
+            if row_udate == '1':
+                massage_bit = '1 запись обновлена'
+            else:
+                massage_bit = f"{row_udate} запись обновлена"
+            self.massage_user(request, f"{massage_bit}")
+
+        publish.short_description="Опубликовать"
+        publish.allowed_permission = ('cnange')#чтобы применять у пользователя должны быть права
+
+        unpublish.short_description = "Снять с публикации"
+        unpublish.allowed_permission = ('cnange')  # чтобы применять у пользователя должны быть права
+
 
 
 admin.site.site_title = "Кино"# поменять в админке в верхней части приложение название
