@@ -1,5 +1,6 @@
 from datetime import date
 
+from django.urls import reverse
 from django.db import models
 from django.shortcuts import render
 
@@ -28,6 +29,9 @@ class Actor(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('actor_detail', kwargs={"slug": self.name})#делает ссылку как на актеров так и на режисеров
+
     class Meta:
         verbose_name = "Актеры и режисеры"
         verbose_name_plural = "Актеры и режисеры"
@@ -55,7 +59,7 @@ class Movie(models.Model):
     year = models.PositiveSmallIntegerField("Дата выхода", default=2020)
     country = models.CharField("Страна", max_length=30)
     directors = models.ManyToManyField(Actor, verbose_name="режисер", related_name='film_director')
-    actors = models.ManyToManyField(Actor, verbose_name='Актеры', related_name='film_actor')
+    actors = models.ManyToManyField(Actor, verbose_name='Актеры', related_name='film_actor')#используя related_name='film_actor' можно сделать узкий запрос к базе
     genres = models.ManyToManyField(Genre, verbose_name='Жанры')
     world_premier = models.DateTimeField("Примьера в мире", auto_now_add=True)
     budget = models.PositiveIntegerField("Бюджет", default=0, help_text='указывать сумму в доларах')

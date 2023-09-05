@@ -20,6 +20,17 @@ class MovieWievs(ListView):
 
 
 
+    # def get_context_data(self, *args, **kwargs):
+    #     """
+    #     Метод категории
+    #     """
+    #     context = super().get_context_data(*args, **kwargs)
+    #     context['categories'] = Category.objects.all()
+    #     return context
+
+      # прописываем этот метод в templattetags
+
+
 
 
 # class MovieDetail(View):
@@ -49,5 +60,12 @@ class AddReview(View):
             form.movie = movie
             form.save()
         return redirect("/")
+
+
+class ActorView(DetailView):
+    """Вывод информации о актере"""
+    model = Actor
+    template_name = 'movie/actor.html'
+    slug_field = "name"#по полю name Actor
 
 
