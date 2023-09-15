@@ -1,19 +1,20 @@
 {% extends 'base.html' %}
-
-
+{% block title %} {% endblock title %}
 {% block content %}
-    <ol class="breadcrumb editContent">
-            <li class="breadcrumb-item">
-                <a href="index.html" class="editContent">Home</a>
-            </li>
-            <li class="breadcrumb-item active editContent">Single Page</li>
-        </ol>
-        <!---->
-        <!-- banner -->
-        <section class="ab-info-main py-md-5 py-4 editContent" style="padding-left: 3rem; padding-right: 3rem;">
+    <section class="ab-info-main py-md-5 py-4 editContent"
+             style="padding-left: 3rem; padding-right: 3rem;">
+        {% block container %}
             <div class="container-fluid py-md-3">
-                <div class="row">
-                     {% include 'sidebar/header.html' %}
-
-
+        {% endblock container %}
+        <div class="row">
+            {% block sidebar %}
+                <div class="side-bar col-lg-3">
+            {% endblock sidebar %}
+            {% include 'include/sidebar.html' %}
+            </div>
+            {% block movie %}
+            {% endblock movie %}
+        </div>
+        </div>
+    </section>
 {% endblock content %}

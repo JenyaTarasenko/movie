@@ -1,83 +1,8 @@
-<!DOCTYPE html>
+{% extends 'movie/base.html' %}
 {% load static %}
-<html lang="ru">
-<head>
-    <!-- //Meta tag Keywords -->
-    <title>Clack Website Template</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- //Meta tag Keywords -->
-    <!-- Custom-Files -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-    <!-- Bootstrap-Core-CSS -->
-    <!--/ Style-CSS -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all">
-    <!--// Style-CSS -->
-    <!-- font-awesome-icons -->
-    <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">
-    <!-- //font-awesome-icons -->
-    <!-- /Fonts -->
-    <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700"
-          rel="stylesheet">
-    <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900"
-          rel="stylesheet">
-    <!-- //Fonts -->
-</head>
+{% block title %}{{ movie.title }}{% endblock title %}
 
-<body>
-
-<div id="page" class="page">
-    <div class="main-banner inner bg bg1" id="home">
-        <!-- header -->
-        <header class="header">
-            <div class="container-fluid px-lg-5">
-                <!-- nav -->
-                <nav class="py-4">
-                    <div id="logo">
-                        <h1><a href="index.html" class="editContent"
-                               style="outline: none; outline-offset: -2px; cursor: inherit; color: rgb(255, 255, 255); font-size: 40px; background-color: rgba(0, 0, 0, 0); font-family: &quot;Source Sans Pro&quot;, sans-serif;">DjangoMovie</a>
-                        </h1>
-                    </div>
-
-                    <label for="drop" class="toggle">Menu</label>
-                    <input type="checkbox" id="drop">
-                    <ul class="menu mt-2">
-                        <li class="active"><a href="index.html">Главная</a></li>
-                        <li>
-                            <!-- First Tier Drop Down -->
-                            <label for="drop-2" class="toggle">Категории <span
-                                    class="fa fa-angle-down" aria-hidden="true"
-                                    style="outline: none; cursor: inherit;"></span> </label>
-                            <a href="#">Категории <span class="fa fa-angle-down"
-                                                        aria-hidden="true"></span></a>
-                            <input type="checkbox" id="drop-2">
-                            <ul>
-                                <li><a href="moviesingle.html">Фильмы</a></li>
-                                <li><a href="moviesingle.html">Сериалы</a></li>
-                                <li><a href="moviesingle.html">Мультфильмы</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="contact.html"
-                               style="color: rgb(255, 255, 255); font-weight: 700; text-transform: uppercase;">Вход</a>
-                        </li>
-                    </ul>
-                </nav>
-                <!-- //nav -->
-            </div>
-        </header>
-    </div>
-    <!--//main-content-->
-    <!---->
-    <ol class="breadcrumb editContent">
-        <li class="breadcrumb-item">
-            <a href="index.html" class="editContent"
-               style="outline: none; cursor: inherit;">Home</a>
-        </li>
-        <li class="breadcrumb-item active editContent" style="outline: none; cursor: inherit;">
-            Single
-        </li>
-    </ol>
-    <!---->
+{% block movie %}
     <!-- banner -->
     <section class="ab-info-main py-md-5 py-4 editContent"
              style="outline: none; outline-offset: -2px; cursor: inherit; color: rgb(33, 37, 41); font-size: 16px; background-color: rgba(0, 0, 0, 0); font-family: Lato, sans-serif;">
@@ -103,67 +28,33 @@
                     <div class="left-side my-4">
                         <h3 class="sear-head editContent" style="outline: none; cursor: inherit;">
                             Жанры</h3>
+                        {% for genre in view.get_genres %}
                         <ul class="w3layouts-box-list">
                             <li class="editContent" style="outline: none; cursor: inherit;">
                                 <input type="checkbox" class="checked">
                                 <span class="span editContent"
-                                      style="outline: none; cursor: inherit;">Аниме</span>
-                            </li>
-                            <li class="editContent" style="outline: none; cursor: inherit;">
-                                <input type="checkbox" class="checked">
-                                <span class="span editContent"
-                                      style="outline: none; cursor: inherit;">Боевики</span>
-                            </li>
-                            <li class="editContent" style="outline: none; cursor: inherit;">
-                                <input type="checkbox" class="checked">
-                                <span class="span editContent"
-                                      style="outline: none; cursor: inherit;">Комедии</span>
-                            </li>
-                            <li class="editContent" style="outline: none; cursor: inherit;">
-                                <input type="checkbox" class="checked">
-                                <span class="span editContent"
-                                      style="outline: none; cursor: inherit;">Ужасы</span>
+                                      style="outline: none; cursor: inherit;">{{ genre.name }}</span>
                             </li>
                         </ul>
+                        {% endfor %}
                     </div>
                     <!-- // preference -->
-                    <!-- discounts -->
+                    <!-- discount -->
+                  <form action="{% url 'filter' %}" method="get">
                     <div class="left-side">
                         <h3 class="sear-head editContent" style="outline: none; cursor: inherit;">
                             Год</h3>
+                        {% for movie in view.get_years %}
                         <ul class="w3layouts-box-list">
                             <li class="editContent" style="outline: none; cursor: inherit;">
-                                <input type="checkbox" class="checked">
-                                <span class="span editContent"
-                                      style="outline: none; cursor: inherit;">2020</span>
-                            </li>
-                            <li class="editContent" style="outline: none; cursor: inherit;">
-                                <input type="checkbox" class="checked">
-                                <span class="span editContent"
-                                      style="outline: none; cursor: inherit;">2019</span>
-                            </li>
-                            <li class="editContent" style="outline: none; cursor: inherit;">
-                                <input type="checkbox" class="checked">
-                                <span class="span editContent"
-                                      style="outline: none; cursor: inherit;">2018</span>
-                            </li>
-                            <li>
-                                <input type="checkbox" class="checked">
-                                <span class="span editContent"
-                                      style="outline: none; cursor: inherit;">2017</span>
-                            </li>
-                            <li class="editContent" style="outline: none; cursor: inherit;">
-                                <input type="checkbox" class="checked">
-                                <span class="span editContent"
-                                      style="outline: none; cursor: inherit;">2016</span>
-                            </li>
-                            <li class="editContent" style="outline: none; cursor: inherit;">
-                                <input type="checkbox" class="checked">
-                                <span class="span editContent"
-                                      style="outline: none; cursor: inherit;">2015</span>
+                                <input type="checkbox" class="checked" name="year" value="{{ movie.year }}">
+                                <span class="span editContent">{{ movie.year }}</span>
                             </li>
                         </ul>
+                        {% endfor %}
+                        <button type="submit">Найти</button>
                     </div>
+                  </form>
                     <!-- //discounts -->
                     <!-- reviews -->
                     <div class="customer-rev left-side my-4">
@@ -379,20 +270,23 @@
                                 <li style="list-style: none"><span><b>Сборы в мире:</b> ${{ movie.fess_in_world }}</span>
                                 </li>
                                 <li style="list-style: none">
-                                    <a href="#"><b>Рейтинг:</b>
+
+                                    <form action="{% url 'add_rating' %}" method="post" name="rating">
+                                        <b>Рейтинг:</b>
+                                        {% csrf_token %}
+
+                                        <input type="hidden" value="{{ movie.id }}" name="movie">
+                                        <span class="rating">
+                                            {% for k, v in star_form.fields.star.choices %}
+                                                <input  id="rating{{ v }}" type="radio" name="star"
+                                                        value="{{ k }}">
+                                            <label for="rating{{ v }}">{{ k }}</label>
+                                            {% endfor %}
+                                        </span>
+
                                         <span class="fa fa-star" aria-hidden="true"
                                               style="outline: none; cursor: inherit;"></span>
-                                        <span class="fa fa-star" aria-hidden="true"
-                                              style="outline: none; cursor: inherit;"></span>
-                                        <span class="fa fa-star" aria-hidden="true"
-                                              style="outline: none; cursor: inherit;"></span>
-                                        <span class="fa fa-star" aria-hidden="true"
-                                              style="outline: none; cursor: inherit;"></span>
-                                        <span class="fa fa-star" aria-hidden="true"
-                                              style="outline: none; cursor: inherit;"></span>
-                                        <span class="editContent"
-                                              style="outline: none; cursor: inherit;">5.0</span>
-                                    </a>
+                                    </form>
                                 </li>
                                 <div class="share-desc">
                                     <div class="share">
@@ -538,7 +432,6 @@
                         <a href="index.html" class="editContent">
                                 <span class="fa" aria-hidden="true"
                                       style="outline: none; cursor: inherit;">
-                                    Django School
                                 </span>
                         </a>
                     </h2>
@@ -686,5 +579,4 @@
             </div>
         </div>
     </div>
-</div>
-</body>
+{% endblock movie %}

@@ -76,7 +76,7 @@ class MovieAdmin(admin.ModelAdmin):
         #(None, {"fields": (("year", "world_premier", "country"),)}),
         (None, {"fields": (("actors", "directors", "genres", "category"),)}),
         (None, {"fields": (("budget", "fees_in_usa", "fess_in_world"),)}),
-        (None, {"fields": (("url", "draft"),)}),
+        (None, {"fields": (("url", "draft","year"),)}),
     )#поля модели выстроиные в ряд по горизонтали
 
     def publish(self, request, queryset):
